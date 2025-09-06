@@ -1,5 +1,4 @@
 DEFAULTS = {
-    "rewrite": [],
     "label_offline": "Komorebi Offline",
     "label_window": "{title}",
     "label_window_active": "{title}",
@@ -17,28 +16,10 @@ DEFAULTS = {
     "enable_scroll_switching": False,
     "reverse_scroll_direction": False,
     "container_padding": {"top": 0, "left": 0, "bottom": 0, "right": 0},
+    "rewrite": [],
 }
 
 VALIDATION_SCHEMA = {
-    "rewrite": {
-        "type": "list",
-        "required": False,
-        "default": DEFAULTS["rewrite"],
-        "schema": {
-            "type": "dict",
-            "schema": {
-                "pattern": {"type": "string", "required": True},
-                "replacement": {"type": "string", "required": True},
-                # Optional case transform applied ONLY when pattern matches:
-                # allowed values mirror active_window: 'lower' | 'upper' | 'title'
-                "case": {
-                    "type": "string",
-                    "allowed": ["lower", "upper", "title"],
-                    "required": False,
-                },
-            },
-        },
-    },
     "label_offline": {"type": "string", "default": DEFAULTS["label_offline"]},
     "label_window": {"type": "string", "default": DEFAULTS["label_window"]},
     "label_window_active": {"type": "string", "default": DEFAULTS["label_window_active"]},
@@ -55,6 +36,23 @@ VALIDATION_SCHEMA = {
     "animation": {"type": "boolean", "default": DEFAULTS["animation"]},
     "enable_scroll_switching": {"type": "boolean", "default": DEFAULTS["enable_scroll_switching"]},
     "reverse_scroll_direction": {"type": "boolean", "default": DEFAULTS["reverse_scroll_direction"]},
+    "rewrite": {
+        "type": "list",
+        "required": False,
+        "schema": {
+            "type": "dict",
+            "schema": {
+                "pattern": {"type": "string", "required": True},
+                "replacement": {"type": "string", "required": True},
+                "case": {
+                    "type": "string",
+                    "required": False,
+                    "allowed": ["lower", "upper", "title", "capitalize"],
+                },
+            },
+        },
+        "default": DEFAULTS["rewrite"],
+    },
     "container_padding": {"type": "dict", "default": DEFAULTS["container_padding"], "required": False},
     "btn_shadow": {
         "type": "dict",
