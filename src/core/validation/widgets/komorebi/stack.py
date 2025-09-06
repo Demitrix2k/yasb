@@ -1,4 +1,5 @@
 DEFAULTS = {
+    "rewrite": [],
     "label_offline": "Komorebi Offline",
     "label_window": "{title}",
     "label_window_active": "{title}",
@@ -7,6 +8,8 @@ DEFAULTS = {
     "show_icons": "never",
     "icon_size": 16,
     "max_length": None,
+    "max_length_active": None,
+    "max_length_overall": None,
     "max_length_ellipsis": "...",
     "hide_if_offline": False,
     "show_only_stack": False,
@@ -17,6 +20,25 @@ DEFAULTS = {
 }
 
 VALIDATION_SCHEMA = {
+    "rewrite": {
+        "type": "list",
+        "required": False,
+        "default": DEFAULTS["rewrite"],
+        "schema": {
+            "type": "dict",
+            "schema": {
+                "pattern": {"type": "string", "required": True},
+                "replacement": {"type": "string", "required": True},
+                # Optional case transform applied ONLY when pattern matches:
+                # allowed values mirror active_window: 'lower' | 'upper' | 'title'
+                "case": {
+                    "type": "string",
+                    "allowed": ["lower", "upper", "title"],
+                    "required": False,
+                },
+            },
+        },
+    },
     "label_offline": {"type": "string", "default": DEFAULTS["label_offline"]},
     "label_window": {"type": "string", "default": DEFAULTS["label_window"]},
     "label_window_active": {"type": "string", "default": DEFAULTS["label_window_active"]},
@@ -27,8 +49,8 @@ VALIDATION_SCHEMA = {
     "icon_size": {"type": "integer", "min": 0, "default": DEFAULTS["icon_size"]},
     "show_only_stack": {"type": "boolean", "default": DEFAULTS["show_only_stack"]},
     "max_length": {"type": "integer", "min": 1, "nullable": True, "default": DEFAULTS["max_length"]},
-    "max_length_active": {"type": "integer", "min": 1, "nullable": True, "default": DEFAULTS["max_length"]},
-    "max_length_overall": {"type": "integer", "min": 1, "nullable": True, "default": DEFAULTS["max_length"]},
+    "max_length_active": {"type": "integer", "min": 1, "nullable": True, "default": DEFAULTS["max_length_active"]},
+    "max_length_overall": {"type": "integer", "min": 1, "nullable": True, "default": DEFAULTS["max_length_overall"]},
     "max_length_ellipsis": {"type": "string", "default": DEFAULTS["max_length_ellipsis"]},
     "animation": {"type": "boolean", "default": DEFAULTS["animation"]},
     "enable_scroll_switching": {"type": "boolean", "default": DEFAULTS["enable_scroll_switching"]},
