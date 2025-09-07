@@ -55,7 +55,7 @@ jobs:
       id: create_tag
       uses: actions/github-script@v7
       with:
-        github-token: ${{ secrets.PAT }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
           const version = `v${process.env.VERSION}`;
           const { owner, repo } = context.repo;
