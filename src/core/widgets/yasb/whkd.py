@@ -302,10 +302,11 @@ class WhkdWidget(BaseWidget):
         whkd_config_home = os.getenv("WHKD_CONFIG_HOME")
         if whkd_config_home:
             whkd_config_home = os.path.expandvars(os.path.expanduser(whkd_config_home))
-            file_path = os.path.join(whkd_config_home, "whkdrc")
-        else:
-            file_path = os.path.join(os.path.expanduser("~"), ".config", "whkdrc")
-            
+        file_path = (
+            os.path.join(whkd_config_home, "whkdrc")
+            if whkd_config_home
+            else os.path.join(os.path.expanduser("~"), ".config", "whkdrc")
+        )
         if not os.path.exists(file_path):
             logging.error(f"File not found: {file_path}")
             raise_info_alert(
