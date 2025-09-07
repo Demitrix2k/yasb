@@ -63,7 +63,9 @@ class WorkspaceButton(QPushButton):
             new_class = " ".join([cls for cls in current_class.split() if not cls.startswith("button-")])
             new_class = f"{new_class} button-{index + 1}"
             button.setProperty("class", new_class)
-            button.setStyleSheet("")
+            # Force style refresh - this is crucial for CSS updates
+            button.style().unpolish(button)
+            button.style().polish(button)
 
     def update_and_redraw(self, status: WorkspaceStatus, lock_width: bool = False):
         # Lock current visual width so style/class changes don't cause a jump
@@ -76,7 +78,9 @@ class WorkspaceButton(QPushButton):
             self.setText(self.populated_label)
         else:
             self.setText(self.default_label)
-        self.setStyleSheet("")
+        # Force style refresh - this is crucial for CSS updates
+        self.style().unpolish(self)
+        self.style().polish(self)
         if lock_width and prev_width is not None:
             self.setFixedWidth(prev_width)
 
@@ -136,7 +140,8 @@ class WorkspaceButtonWithIcons(QFrame):
             new_class = " ".join([cls for cls in current_class.split() if not cls.startswith("button-")])
             new_class = f"{new_class} button-{index + 1}"
             button.setProperty("class", new_class)
-            button.setStyleSheet("")
+            button.style().unpolish(button)
+            button.style().polish(button)
 
     def update_and_redraw(self, status: WorkspaceStatus, lock_width: bool = False):
         prev_width = self.width() if lock_width else None
@@ -148,7 +153,8 @@ class WorkspaceButtonWithIcons(QFrame):
             self.text_label.setText(self.populated_label)
         else:
             self.text_label.setText(self.default_label)
-        self.setStyleSheet("")
+        self.style().unpolish(self)
+        self.style().polish(self)
         if lock_width and prev_width is not None:
             self.setFixedWidth(prev_width)
 
